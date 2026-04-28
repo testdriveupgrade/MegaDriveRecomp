@@ -1,0 +1,5 @@
+add_library(sega_audio audio_output.cpp)
+target_link_libraries(sega_audio spdlog::spdlog_header_only)
+if(WIN32)
+  target_link_libraries(sega_audio ole32 winmm)
+endif()

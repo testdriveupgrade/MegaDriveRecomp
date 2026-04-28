@@ -1,0 +1,2 @@
+add_library(sega_executor executor.cpp interrupt_handler.cpp presets.cpp)
+target_link_libraries(sega_executor sega_memory sega_state_dump sega_audio spdlog::spdlog_header_only)

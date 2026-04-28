@@ -1,0 +1,37 @@
+#pragma once
+#include "imgui.h"
+#include "lib/sega/memory/vdp_device.h"
+#include "lib/sega/video/colors.h"
+#include <GL/gl.h>
+#include <cstddef>
+#include <cstdint>
+#include <span>
+#include <vector>
+
+namespace sega {
+
+// OpenGL tilemap drawer
+class Tilemap {
+public:
+  Tilemap(const VdpDevice& vdp_device);
+  ImTextureID draw(const Colors::Palette& palette);
+
+  uint8_t width() const {
+    return width_;
+  }
+  uint8_t height() const {
+    return height_;
+  }
+  std::span<const uint8_t> canvas() const {
+    return canvas_;
+  }
+
+private:
+  const VdpDevice& vdp_device_;
+  GLuint texture_{};
+  uint8_t width_{};  // in tiles
+  uint8_t height_{}; // in tiles
+  std::vector<uint8_t> canvas_;
+};
+
+} // namespace sega
