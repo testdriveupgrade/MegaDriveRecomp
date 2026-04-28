@@ -1,0 +1,42 @@
+# SMDRecomp configuration
+# Run: smd_recomp example.toml
+
+[rom]
+path = "sonic.gen"     # path to the Sega Mega Drive ROM image
+
+[output]
+directory = "output/"  # directory where generated C++ files are written
+namespace = "sonic"    # C++ namespace for the generated functions
+split_files = true     # true = one .cpp per function; false = single all_functions.cpp
+
+# ── Switch / jump tables ─────────────────────────────────────────────────────
+# Each [[switch_tables]] entry describes a JMP (An) indirect-jump table found
+# in the ROM.  The recompiler uses these to resolve indirect branches.
+#
+# address    — ROM offset of the table (big-endian entries)
+# count      — number of entries in the table
+# entry_size — 2 (word/relative) or 4 (long/absolute) bytes per entry
+
+# Example — uncomment and fill in real values for your ROM:
+# [[switch_tables]]
+# address    = 0x00CE6A
+# count      = 8
+# entry_size = 4
+
+# ── Extra function entry points ───────────────────────────────────────────────
+# The recompiler automatically discovers functions reachable from the vector
+# table (reset_pc, vblank, hblank).  Add extra entry points here — useful for
+# interrupt handlers, debug stubs, or functions that are only reachable via
+# pointer tables not covered by [[switch_tables]].
+#
+# address — ROM offset of the function entry
+# name    — C++ identifier to use (must be a valid identifier)
+
+# Example:
+# [[functions]]
+# address = 0x000200
+# name    = "main_init"
+
+# [[functions]]
+# address = 0x001234
+# name    = "player_update"
